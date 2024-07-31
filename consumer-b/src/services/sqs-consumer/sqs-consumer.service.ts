@@ -1,11 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as AWS from 'aws-sdk';
+import { SnsNotificationService } from '../sns-notification/sns-notification.service';
 @Injectable()
 export class SqsConsumerService {
   private readonly sqs: AWS.SQS;
   private readonly logger = new Logger(SqsConsumerService.name);
 
-  constructor() {
+  constructor(private snsNotificationService: SnsNotificationService) {
     this.sqs = new AWS.SQS({
       region: process.env.AWS_REGION,
       accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -29,6 +30,11 @@ export class SqsConsumerService {
           for (const message of data.Messages) {
             // Process message here
             this.logger.log('Received message:', message.Body);
+            if (`${process.env.ENABLE_SNS}` == 'true') {
+              await this.snsNotificationService.publishNotification(
+                message.Body,
+              );
+            }
             await this.deleteMessage(message.ReceiptHandle);
           }
         }
