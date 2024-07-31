@@ -1,0 +1,7 @@
+version: '3.7'
+
+services:
+  service-b:
+    build: .
+    ports:
+      - "3017:3017"
