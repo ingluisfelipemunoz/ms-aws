@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  service-a:
+    build: .
+    ports:
+      - "3016:3016"
+    environment:
+      - AWS_REGION=us-east-1
+      - SQS_QUEUE_URL=https://sqs.us-east-1.amazonaws.com/769370903497/ms-a-queue
