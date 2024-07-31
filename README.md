@@ -26,15 +26,7 @@ The `producer-a` microservice is responsible for producing messages to an AWS SQ
 ### Environment Variables
 - `REVIEW THE .env.example FILE TO CHECK THE CONFIG THAT YOU NEED TO SETOP`
 
-### Docker Compose Configuration
-The `docker-compose.yml` file for `producer-a` is configured as follows:
-```yml
-version: '3.7'
-services:
-  service-a:
-    build: .
-    ports:
-      - "3016:3016"
+
 
 ## Consumer-B Microservice
 
